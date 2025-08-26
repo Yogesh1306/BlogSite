@@ -1,0 +1,19 @@
+@import "tailwindcss";
+
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Lora:ital,wght@0,400..700;1,400..700&family=Varela&display=swap');
+
+
+body::-webkit-scrollbar{
+    display: none;
+}
+
+@layer components{
+    .manage-overflow{
+        overflow:hidden;
+        text-overflow: ellipse;
+        line-clamp: 4;
+        display: -webkit-box;
+        -webkit-line-clamp: 4;
+        -webkit-box-orient: vertical;
+    }
+}
