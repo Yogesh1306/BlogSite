@@ -71,23 +71,76 @@ const userLogin = asyncHandler( async(req,res)=>{
     if(!isPasswordCorrect){
         throw new ApiError(400, "Invalid credentials!!")
     }
+    const {accessToken, refreshToken} = await generateAccessAndRefreshToken(user._id)
 
-    const loggedInUser = await User.findById(user._id).select("-password")
+    const loggedInUser = await User.findById(user._id).select("-password -refreshToken")
 
-    return res.status(200).json(new ApiResponse(200, loggedInUser, "User logged in successfully"))
+    const options = {
+        httpOnly: true,
+        secure: true
+    }
+
+    return res
+    .status(200)
+    .cookie("AccessToken", accessToken, options)
+    .cookie("RefreshToken", refreshToken, options)
+    .json(new ApiResponse(200, loggedInUser, "User logged in successfully"))
 })
+
+const userlogout = asyncHandler(async(req,res)=>{
+    await User.findByIdAndUpdate(
+        req.user._id,
+        {
+            $set: {refreshToken: null},
+        },
+        {
+            new: true
+        }
+    )
+
+    const options = {
+        httpOnly: true,
+        secure: true,
+    }
+
+    return res
+    .status(200)
+    .clearCookie("AccessToken", options)
+    .clearCookie("RefreshToken", options)
+    .json(new ApiResponse(200, {}, "User logged out"))
+})
+
 const changePassword = asyncHandler( async( req, res)=>{
+    const {oldPassword, newPassword} = req.body;
 
+    const user = await User.findById(req.user?._id);
+
+    const isPasswordCorrect = await user.isPasswordCorrect(oldPassword);
+
+    if(!isPasswordCorrect){
+        throw new ApiError(400, "Invalid credentials!!");
+    }
+
+    user.password = newPassword;
+    await user.save({validateBeforeSave: false});
+
+    return res
+    .status(200)
+    .json(new ApiResponse(200, {}, "Password changed successfully"))
 })
+
 const changeProfilePic = asyncHandler( async( req, res)=>{
 
 })
+
 const changeUsername = asyncHandler( async( req, res)=>{
 
 })
+
 export {
     userLogin,
     userRegister,
+    userlogout,
     changePassword,
     changeProfilePic,
     changeUsername,
