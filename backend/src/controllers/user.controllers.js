@@ -3,6 +3,22 @@ import { ApiError } from "../utils/ApiError.js"
 import { ApiResponse } from "../utils/ApiResponse.js"
 import { User } from "../models/user.model.js"
 
+const generateAccessAndRefreshToken = async(userId)=>{
+    try {
+        const user = await User.findById(userId);
+        const accessToken = user.generateAccessToken();
+        const refreshToken = user.generateRefreshToken();
+
+        user.refreshToken = refreshToken;
+        await user.save({validateBeforeSave: false});
+
+        return {accessToken, refreshToken}
+    } catch (error) {
+        throw new ApiError(500, error?.message || "Something went wrong while generating Access token and Refresh token")
+        
+    }
+}
+
 const userRegister = asyncHandler( async(req,res)=>{
 
     const {username, email, password} = req.body;
@@ -60,8 +76,19 @@ const userLogin = asyncHandler( async(req,res)=>{
 
     return res.status(200).json(new ApiResponse(200, loggedInUser, "User logged in successfully"))
 })
+const changePassword = asyncHandler( async( req, res)=>{
 
+})
+const changeProfilePic = asyncHandler( async( req, res)=>{
+
+})
+const changeUsername = asyncHandler( async( req, res)=>{
+
+})
 export {
     userLogin,
     userRegister,
+    changePassword,
+    changeProfilePic,
+    changeUsername,
 }
