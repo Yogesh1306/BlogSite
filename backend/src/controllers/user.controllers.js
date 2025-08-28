@@ -2,6 +2,7 @@ import {asyncHandler} from "../utils/asyncHandler.js"
 import { ApiError } from "../utils/ApiError.js"
 import { ApiResponse } from "../utils/ApiResponse.js"
 import { User } from "../models/user.model.js"
+import { Post } from "../models/post.model.js"
 
 const generateAccessAndRefreshToken = async(userId)=>{
     try {
@@ -51,6 +52,7 @@ const userRegister = asyncHandler( async(req,res)=>{
     )
 
 })
+
 const userLogin = asyncHandler( async(req,res)=>{
     const {username, email, password} = req.body;
 
@@ -130,17 +132,73 @@ const changePassword = asyncHandler( async( req, res)=>{
 })
 
 const changeProfilePic = asyncHandler( async( req, res)=>{
+    const profilePicLocalPath = req.file?.path;
 
+    if(!profilePicLocalPath){
+        throw new ApiError(400, "Profile pic missing")
+    }
+
+    const user = await User.findByIdAndUpdate(
+        req.user?._id,
+        {
+            $set: {profilePic: profilePicLocalPath}
+        },
+        {
+            new: true
+        }
+    ).select("-password")
+
+    return res.status(200).json(new ApiResponse(200, user, "Profile pic updated successfully"))
 })
 
 const changeUsername = asyncHandler( async( req, res)=>{
+    const username = req.body;
 
+    if(!username){
+        throw new ApiError(400, "Field is required!!")
+    }
+
+    const user = await User.findByIdAndUpdate(
+        req.user?._id,
+        {
+            $set: {username}
+        },
+        {
+            new: true
+        }
+    ).select("-password");
+
+    return res.status(200).json(new ApiResponse(200, user, "Account details updated successfully"));
+})
+
+const deleteUser = asyncHandler(async(req, res)=>{
+    const deletedPost = await Post.deleteMany({author: req.user?._id})
+    const deletedUser = await User.findByIdAndDelete(
+        req.user?._id,
+    )
+
+    const options = {
+        httpOnly: true,
+        secure: true,
+    }
+
+    return res
+    .status(200)
+    .clearCookie("AccessToken", options)
+    .clearCookie("RefreshToken", options)
+    .json(new ApiResponse(200, {deletedUser, deletedPost}, "User Deleted!!"))
+})
+
+const getUser = asyncHandler(async(req,res)=>{
+    return res.status(200).json(new ApiResponse(200, req.user, "Current user retrieved!!"))
 })
 
 export {
     userLogin,
     userRegister,
     userlogout,
+    deleteUser,
+    getUser,
     changePassword,
     changeProfilePic,
     changeUsername,

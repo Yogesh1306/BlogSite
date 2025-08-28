@@ -36,8 +36,8 @@ userSchema.pre("save", async function (next) {
   next();
 });
 
-userSchema.methods.isPasswordCorrect = function (password) {
-  return this.password === password;
+userSchema.methods.isPasswordCorrect = async function (password) {
+  return await jwt.compare(password, this.password);
 };
 
 userSchema.methods.generateAccessToken = function () {
