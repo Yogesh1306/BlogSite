@@ -189,7 +189,7 @@ const deleteUser = asyncHandler(async(req, res)=>{
     .json(new ApiResponse(200, {deletedUser, deletedPost}, "User Deleted!!"))
 })
 
-const getUser = asyncHandler(async(req,res)=>{
+const getCurrentUser = asyncHandler(async(req,res)=>{    
     return res.status(200).json(new ApiResponse(200, req.user, "Current user retrieved!!"))
 })
 
@@ -198,7 +198,7 @@ export {
     userRegister,
     userlogout,
     deleteUser,
-    getUser,
+    getCurrentUser,
     changePassword,
     changeProfilePic,
     changeUsername,
