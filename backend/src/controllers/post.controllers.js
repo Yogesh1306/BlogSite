@@ -75,7 +75,19 @@ const updatePost = asyncHandler( async(req,res)=>{
 });
 
 const deletePost = asyncHandler( async(req,res)=>{
+    const postId = req.params.id;
 
+    const post = await Post.findById(postId);
+
+    if(!post){
+        throw new ApiError(401, "No such post exists")
+    }
+
+    const deletedPost = await post.deleteOne();
+    console.log('deletedPost data', deletedPost.data);
+    
+
+    return res.status(200).json(new ApiResponse(200, deletedPost, "Post deleted successfully"));
 });
 
 const getAllPosts = asyncHandler( async(req,res)=>{
