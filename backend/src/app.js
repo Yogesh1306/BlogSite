@@ -10,9 +10,11 @@ app.use(cookieParser())
 //importing routes
 import userRoutes from "./routes/user.routes.js";
 import postRoutes from "./routes/post.routes.js";
+import categoryRoutes from "./routes/category.routes.js";
 
 app.use("/api/v1/users", userRoutes)
 app.use("/api/v1/posts", postRoutes)
+app.use("/api/v1/categories", categoryRoutes)
 
 
 
