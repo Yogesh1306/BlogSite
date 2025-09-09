@@ -35,11 +35,18 @@ const userRegister = asyncHandler( async(req,res)=>{
     if(userExist){
         throw new ApiError(409, "User already Exist!! Please login")
     }
+    
+    const profilePicLocalPath = req.file?.path;
+
+    if(!profilePicLocalPath){
+        throw new ApiError(400, "Profile pic is required")
+    }
 
     const user = await User.create({
         username,
         email,
-        password
+        password,
+        profilePic: profilePicLocalPath
     });
 
     const createdUser = await User.findById(user._id).select("-password");
