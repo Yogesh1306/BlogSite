@@ -9,8 +9,8 @@ const Home = () => {
     const [posts, setPosts] = useState([])
     useEffect(() => {
         const fetchPosts = async () => {
-            const res = await axios.get("/posts")
-            setPosts(res.data)
+            const res = await axios.get("/api/v1/posts")
+            setPosts(res.data.data[0])
         }
         fetchPosts()
     }, [])
