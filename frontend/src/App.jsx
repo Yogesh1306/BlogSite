@@ -8,10 +8,12 @@ import Settings from './pages/Settings'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import IndividualPage from './pages/IndividualPage'
+import { useContext } from 'react'
+import { Context } from './context/Context'
 
 
 function App() {
-  const user = false;
+  const {user} = useContext(Context);
   const router = createBrowserRouter([
     {
       path: "/",
