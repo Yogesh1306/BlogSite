@@ -1,5 +1,16 @@
-import { Facebook, X, Pinterest, Instagram } from "@mui/icons-material";
+import { Facebook, X, Pinterest, Instagram } from "@mui/icons-material"
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { NavLink } from "react-router";
 const Sidebar = () => {
+    const [categories,setCategories] = useState([]);
+    useEffect(()=>{
+        const getCategories = async()=>{
+            const res = await axios.get("/api/v1/categories");
+            setCategories(res.data.data);
+        }
+        getCategories();
+    },[])
     return (
         <div className="flex-3 flex flex-col items-center py-2 px-1">
             <div className="flex flex-col justify-center items-center gap-2 w-full p-2">
@@ -10,12 +21,13 @@ const Sidebar = () => {
             <div className="mt-4 w-full flex flex-col justify-center items-center">
                 <span className="border-y-2 border-gray-400 text-xl">CATEGORIES</span>
                 <ul className="w-full grid grid-cols-2 gap-1 px-2 text-center mt-2">
-                    <li className="cursor-pointer hover:bg-gray-200 rounded-md p-1 text-lg ">Life</li>
-                    <li className="cursor-pointer hover:bg-gray-200 rounded-md p-1 text-lg ">Science</li>
-                    <li className="cursor-pointer hover:bg-gray-200 rounded-md p-1 text-lg ">Technology</li>
-                    <li className="cursor-pointer hover:bg-gray-200 rounded-md p-1 text-lg ">Travel</li>
-                    <li className="cursor-pointer hover:bg-gray-200 rounded-md p-1 text-lg ">Cinema</li>
-                    <li className="cursor-pointer hover:bg-gray-200 rounded-md p-1 text-lg ">Misc</li>
+                    {categories.map(c=>{
+
+                        return <NavLink key={c.name._id} to={`/?category=${c.name}`}>
+                            <li className="cursor-pointer hover:bg-gray-200 rounded-md p-1 text-lg ">{c.name.charAt(0).toUpperCase()+ c.name.slice(1).toLowerCase()}</li>
+                        </NavLink> 
+                    })}
+                    
                 </ul>
             </div>
             <div className="mt-4 w-full flex flex-col justify-center items-center">

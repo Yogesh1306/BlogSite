@@ -1,4 +1,5 @@
 import {Edit, Delete} from '@mui/icons-material';
+import { NavLink } from 'react-router';
 
 const IndividualPost = ({post}) => {
   console.log(post)
@@ -16,7 +17,11 @@ const IndividualPost = ({post}) => {
         </div>
       </h1>
       <div className='flex justify-between text-xl text-yellow-500'>
-        <span>Author: <b>{post.author.username}</b></span>
+        <span>Author:
+          <NavLink to={`/?user=${post.author.username}`}>
+          <b> {post.author.username}</b>
+          </NavLink>
+        </span>
         <span>{new Date(post.createdAt).toDateString()}</span>
       </div>
       <p className="first-letter:font-bold first-letter:text-4xl first-letter:ml-10 text-lg mt-2 ">

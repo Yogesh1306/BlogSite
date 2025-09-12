@@ -11,7 +11,7 @@ const Post = ({post}) => {
       </div>
       <div className='flex gap-3 py-1 px-1 italic text-[18px] text-gray-400'>
         {post.category.map(c=>{
-          return <span key={c._id} className='rounded-xl bg-red-200 px-3 py-0.5 shadow-md shadow-green-300'>{c.name}</span>
+          return <span key={c._id} className='rounded-xl bg-red-200 px-3 py-0.5 shadow-md shadow-green-300'>{c.name.charAt(0).toUpperCase()+ c.name.slice(1).toLowerCase()}</span>
         })}
       </div>
       <div className='flex flex-col gap-2 '>

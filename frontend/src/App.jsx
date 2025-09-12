@@ -11,7 +11,7 @@ import IndividualPage from './pages/IndividualPage'
 
 
 function App() {
-  const user = true;
+  const user = false;
   const router = createBrowserRouter([
     {
       path: "/",
