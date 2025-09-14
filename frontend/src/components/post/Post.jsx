@@ -2,12 +2,13 @@ import { NavLink } from "react-router";
 
 
 const Post = ({post}) => {
+  const publicPath = "http://localhost:3000/"
   return (
     <NavLink to={`/post/${post._id}`}>
     <div className=" w-[22vw] h-[60vh] mt-3 mb-3 p-3 rounded-xl shadow-lg shadow-gray-400 ">
       <div>
         {post.photo && 
-        <img className='w-full h-55 mb-1 object-cover rounded-xl' src={post.photo} alt="" />}
+        <img className='w-full h-55 mb-1 object-cover rounded-xl' src={publicPath + post.photo} alt="postPhoto" />}
       </div>
       <div className='flex gap-3 py-1 px-1 italic text-[18px] text-gray-400'>
         {post.category.map(c=>{
