@@ -6,17 +6,22 @@ import { Post } from "../models/post.model.js";
 import { Category } from "../models/category.model.js";
 
 const createPost = asyncHandler(async (req, res) => {
-  const { title, content, category } = req.body;
+  const { title, content } = req.body;
+  let {category} = req.body;
 
   if (!title || !content) {
     throw new ApiError(400, "Missing required fields!!");
   }
 
+  console.log("req.file: ", req.file)
   const photo = req.file?.path || " ";
   const author = req.user?._id;
 
   // category should be array of names
-  if (!Array.isArray(category) || category.length === 0) {
+  if(!Array.isArray(category)){
+    category = category.split(",");
+  }
+  if (category.length === 0) {
     throw new ApiError(400, "At least one category is required");
   }
 
