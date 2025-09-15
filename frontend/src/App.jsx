@@ -10,6 +10,10 @@ import Register from './pages/Register'
 import IndividualPage from './pages/IndividualPage'
 import { useContext } from 'react'
 import { Context } from './context/Context'
+import { ThemeProvider } from './context/ThemeContext'
+import { ToastProvider } from './context/ToastContext'
+import BackToTop from './components/ui/BackToTop'
+import ReadingProgress from './components/ui/ReadingProgress'
 
 
 function App() {
@@ -51,10 +55,13 @@ function App() {
   ])
 
   return (
-    <>
-    <RouterProvider router={router} />
-    {}
-    </>
+    <ThemeProvider>
+      <ToastProvider>
+        <ReadingProgress />
+        <RouterProvider router={router} />
+        <BackToTop />
+      </ToastProvider>
+    </ThemeProvider>
   )
 }
 
