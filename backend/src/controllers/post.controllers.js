@@ -13,7 +13,6 @@ const createPost = asyncHandler(async (req, res) => {
     throw new ApiError(400, "Missing required fields!!");
   }
 
-  console.log("req.file: ", req.file)
   const photo = req.file?.path || " ";
   const author = req.user?._id;
 
@@ -43,7 +42,6 @@ const createPost = asyncHandler(async (req, res) => {
     category: categoryIds || " ",
   });
 
-  // const createdPost = await Post.findById(newPost._id);
   const createdPost = await Post.findById(newPost._id)
     .populate("author", "username email")
     .populate("category", "name");
