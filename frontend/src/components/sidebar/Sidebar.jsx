@@ -1,13 +1,16 @@
 import { Facebook, X, Pinterest, Instagram, TrendingUp, NewReleases, Email, Person } from "@mui/icons-material"
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { NavLink } from "react-router";
+import { NavLink, useLocation } from "react-router";
 
-const Sidebar = () => {
+const Sidebar = ({posts}) => {
     const [categories, setCategories] = useState([]);
     const [isNewsletterOpen, setIsNewsletterOpen] = useState(false);
     const [email, setEmail] = useState('');
+    const location  = useLocation();
     
+    const currentCategory = new URLSearchParams(location.search).get('category');
+
     useEffect(() => {
         const getCategories = async() => {
             try {
@@ -28,11 +31,7 @@ const Sidebar = () => {
         setIsNewsletterOpen(false);
     };
 
-    const popularPosts = [
-        { id: 1, title: "Getting Started with React Hooks", views: 1.2 },
-        { id: 2, title: "Node.js Best Practices 2024", views: 0.8 },
-        { id: 3, title: "CSS Grid vs Flexbox Guide", views: 0.6 }
-    ];
+    const popularPosts = posts || [];
 
     return (
         <div className="w-80 max-w-sm mx-auto lg:mx-0">
@@ -52,7 +51,7 @@ const Sidebar = () => {
                             <div className="absolute -bottom-2 -right-2 bg-green-500 w-6 h-6 rounded-full border-3 border-white"></div>
                         </div>
                         <div className="text-center mb-4">
-                            <h4 className="font-secondary font-semibold text-gray-900 text-lg">John Doe</h4>
+                            <h4 className="font-secondary font-semibold text-gray-900 text-lg">Yogesh Joshi</h4>
                             <p className="font-primary text-gray-500 text-sm">Full Stack Developer</p>
                         </div>
                         <p className="font-primary text-gray-600 text-sm leading-relaxed text-center">
@@ -78,7 +77,8 @@ const Sidebar = () => {
                     <div className="p-4">
                         <div className="space-y-3">
                             {popularPosts.map((post, index) => (
-                                <div key={post.id} className="group cursor-pointer p-3 rounded-lg hover:bg-gray-50 transition-colors duration-200">
+                                <NavLink  key={post._id} to={`/post/${post._id}`}>
+                                <div className="group cursor-pointer p-3 rounded-lg hover:bg-gray-50 transition-colors duration-200">
                                     <div className="flex items-start space-x-3">
                                         <div className="flex-shrink-0 w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center text-white font-bold text-sm">
                                             {index + 1}
@@ -88,11 +88,12 @@ const Sidebar = () => {
                                                 {post.title}
                                             </h4>
                                             <p className="font-primary text-xs text-gray-500 mt-1">
-                                                {post.views}k views
+                                                20k views
                                             </p>
                                         </div>
                                     </div>
                                 </div>
+                                </NavLink>
                             ))}
                         </div>
                     </div>
@@ -110,15 +111,16 @@ const Sidebar = () => {
                         <div className="grid grid-cols-2 gap-2">
                             {categories.map(c => (
                                 <NavLink 
-                                    key={c.name._id} 
+                                    key={c._id} 
                                     to={`/?category=${c.name}`}
-                                    className={({ isActive }) =>
+                                    className={
                                         `block p-3 rounded-lg text-center transition-all duration-200 group ${
-                                            isActive 
+                                            (currentCategory === c.name)
                                                 ? 'bg-blue-500 text-white shadow-lg' 
                                                 : 'bg-gray-50 text-gray-700 hover:bg-blue-50 hover:text-blue-600 hover:scale-105'
                                         }`
                                     }
+                                    
                                 >
                                     <span className="font-secondary text-sm font-medium">
                                         {c.name.charAt(0).toUpperCase() + c.name.slice(1).toLowerCase()}

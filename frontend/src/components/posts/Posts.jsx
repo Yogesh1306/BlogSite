@@ -42,7 +42,7 @@ const Posts = ({posts}) => {
     <div className="flex-1 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         {/* Posts Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 lg:gap-8 mb-12">
           {isLoading ? (
             // Show skeleton loaders
             Array.from({ length: 6 }, (_, index) => (
@@ -58,7 +58,7 @@ const Posts = ({posts}) => {
                 <Post post={post} />
               </div>
             ))
-          ) : (
+          ) : ( 
             // Empty state
             <div className="col-span-full flex flex-col items-center justify-center py-16">
               <div className="text-6xl mb-4">📝</div>

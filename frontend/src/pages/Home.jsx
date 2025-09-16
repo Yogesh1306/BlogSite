@@ -40,7 +40,7 @@ const Home = () => {
                         
                         {/* Sidebar */}
                         <div className="lg:col-span-4 mt-8 lg:mt-0">
-                            <Sidebar/>
+                            <Sidebar posts={posts}/>
                         </div>
                     </div>
                 </div>

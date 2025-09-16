@@ -145,7 +145,7 @@ const Post = ({post}) => {
             <div className="flex items-center space-x-4">
               <div className="flex items-center space-x-1">
                 <PersonOutline className="w-4 h-4" />
-                <span className="font-medium">{post.username || 'Anonymous'}</span>
+                <span className="font-medium">{post.author.username || 'Anonymous'}</span>
               </div>
               <div className="flex items-center space-x-1">
                 <AccessTime className="w-4 h-4" />
@@ -172,7 +172,7 @@ const Post = ({post}) => {
             </div>
             
             <NavLink 
-              to={`/post/${post._id}`}
+              to={`/posts/${post._id}`}
               className="inline-flex items-center px-4 py-2 text-sm font-medium text-blue-600 bg-blue-50 rounded-lg hover:bg-blue-100 transition-all duration-200 group"
             >
               Read More
