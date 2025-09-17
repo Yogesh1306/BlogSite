@@ -1,12 +1,12 @@
 import { Facebook, X, Pinterest, Instagram, Search, LightMode, DarkMode } from "@mui/icons-material";
 import { NavLink } from 'react-router';
-import { useState } from 'react';
-import { useContext } from "react";
+import { useState,useContext } from 'react';
 import { Context } from "../../context/Context";
 import { useTheme } from '../../context/ThemeContext';
 import SearchModal from '../ui/SearchModal';
 
 const Navbar = () => {
+  const publicPath = "http://localhost:3000/";
   const [showDrop, setShowDrop] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -104,8 +104,8 @@ const Navbar = () => {
                   onClick={() => setShowDrop(!showDrop)} 
                   className="flex items-center space-x-2 p-2 rounded-full hover:bg-gray-100 transition-all duration-200"
                 >
-                  <img className="w-8 h-8 rounded-full object-cover border-2 border-gray-200" src={user.profilePic} alt={user.username} />
-                  <span className="hidden sm:block font-medium text-gray-700">{user.username}</span>
+                  <img className="w-8 h-8 rounded-full object-cover border-2 border-gray-200" src={publicPath + user.data.profilePic} alt={user.data.username} />
+                  <span className="hidden sm:block font-medium text-gray-700">{user.data.username}</span>
                 </button>
 
                 {/* User Dropdown */}
@@ -114,8 +114,8 @@ const Navbar = () => {
                 }`}>
                   {/* User Info */}
                   <div className="p-4 border-b border-gray-100">
-                    <div className="font-secondary font-semibold text-gray-900">{user.username}</div>
-                    <div className="font-primary text-sm text-gray-500 truncate">{user.email}</div>
+                    <div className="font-secondary font-semibold text-gray-900">{user.data.username}</div>
+                    <div className="font-primary text-sm text-gray-500 truncate">{user.data.email}</div>
                   </div>
                   
                   {/* Menu Items */}

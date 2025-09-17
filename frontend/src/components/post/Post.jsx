@@ -129,7 +129,7 @@ const Post = ({post}) => {
           </div>
 
           {/* Title */}
-          <NavLink to={`/post/${post._id}`}>
+          <NavLink to={`/posts/${post._id}`}>
             <h3 className='font-secondary text-xl font-bold text-gray-900 mb-3 line-clamp-2 hover:text-blue-600 transition-colors duration-200 leading-tight'>
               {post.title}
             </h3>

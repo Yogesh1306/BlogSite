@@ -48,7 +48,7 @@ function App() {
       element: <>{user ? <><Navbar/><Home/></> : <><Navbar/><Register/></> }</>
     },
     {
-      path: "/post/:postId",
+      path: "/posts/:postId",
       element: <><Navbar/><IndividualPage/></>
     },
     
