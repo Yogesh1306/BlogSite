@@ -159,7 +159,7 @@ const changeProfilePic = asyncHandler( async( req, res)=>{
 })
 
 const changeUsername = asyncHandler( async( req, res)=>{
-    const username = req.body;
+    const {username} = req.body;
 
     if(!username){
         throw new ApiError(400, "Field is required!!")
