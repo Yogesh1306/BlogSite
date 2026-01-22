@@ -18,11 +18,11 @@ const Settings = () => {
   const { user, dispatch } = useContext(Context);
 
   useEffect(() => {
-    setProfileImage(user.data.profilePic || "");
-    setUsername(user.data.username);
-    setEmail(user.data.email)
+    setProfileImage(user?.profileImg || "");
+    setUsername(user?.username || " ");
+    setEmail(user?.email || " ")
     console.log("user in settings", user)
-  }, [user])
+  }, [user,dispatch])
 
 
   // Handle image file selection and preview
@@ -51,18 +51,17 @@ const Settings = () => {
       if (imagePreview) {
         const data = new FormData();
         data.append("profilePic", imagePreview);
-        const res = await axios.put("/api/v1/users/updateProfilePic", data, { headers: { "Content-Type": "multipart/form-data" }, withCredentials: true });
-        dispatch({type: "UPDATE_SUCCESS", payload: res.data})
-        console.log(res.data);
-        console.log("User after profile pic update:", user);
+        const res = await axios.patch("/api/v1/users/updateProfilePic", data, { withCredentials: true });
+        console.log(res.data.data)
+        dispatch({type: "UPDATE_SUCCESS", payload: res.data.data})
       }
       if (username !== user.username) {
-        const res = await axios.put("/api/v1/users/updateUsername", { username }, { withCredentials: true });
-        console.log(res.data);
+        const res = await axios.patch("/api/v1/users/updateUsername", { username }, { withCredentials: true });
+        dispatch({type: "UPDATE_SUCCESS", payload: res.data.data})
       }
       if(oldPassword !== "" && newPassword !== ""){
-        const res = await axios.put("/api/v1/users/updatePassword", {oldPassword, newPassword}, {withCredentials: true});
-        console.log(res.data);
+        const res = await axios.patch("/api/v1/users/updatePassword", {oldPassword, newPassword}, {withCredentials: true});
+        dispatch({type: "UPDATE_SUCCESS", payload: res.data.data})
       }
     } catch (error) {
       console.log("Error updating profile: ", error)
@@ -171,6 +170,7 @@ const Settings = () => {
                   id="email"
                   name="email"
                   value={email}
+                  onChange={()=>{}}
                 />
               </div>
             </div>
