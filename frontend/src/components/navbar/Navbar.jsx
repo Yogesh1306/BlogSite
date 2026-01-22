@@ -1,48 +1,67 @@
-import { Facebook, X, Pinterest, Instagram, Search, LightMode, DarkMode } from "@mui/icons-material";
-import { NavLink } from 'react-router';
-import { useState,useContext } from 'react';
+import {
+  X,
+  Search,
+  LightMode,
+  DarkMode,
+  GitHub,
+  LinkedIn,
+} from "@mui/icons-material";
+import { NavLink } from "react-router";
+import { useState, useContext } from "react";
 import { Context } from "../../context/Context";
-import { useTheme } from '../../context/ThemeContext';
-import SearchModal from '../ui/SearchModal';
+import { useTheme } from "../../context/ThemeContext";
+import SearchModal from "../ui/SearchModal";
 
 const Navbar = () => {
   const publicPath = "http://localhost:3000/";
   const [showDrop, setShowDrop] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const {user, dispatch} = useContext(Context);
+  const { user, dispatch } = useContext(Context);
   const { theme, toggleTheme, isDark } = useTheme();
 
-  const handleLogout = ()=>{
-    dispatch({type: "LOGOUT"});
-    window.location.replace("/");
-  }
-
   const navItems = [
-    { to: '/', label: 'Home' },
-    { to: '/about', label: 'About' },
-    { to: '/contact', label: 'Contact' },
-    { to: '/write', label: 'Write' },
+    { to: "/", label: "Home" },
+    { to: "/about", label: "About" },
+    { to: "/contact", label: "Contact" },
+    { to: "/write", label: "Write" },
   ];
 
+  const handleLogout = () => {
+    dispatch({ type: "LOGOUT" });
+    window.location.replace("/");
+  };
+
   return (
-    <nav className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-200/50 shadow-sm transition-all duration-300">
+    <nav className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-200/50 shadow-sm transition-all duration-300 ">
+      <div className="relative>">
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Social Media Icons */}
           <div className="hidden md:flex items-center space-x-4">
             <div className="flex items-center space-x-3">
-              <a href="#" className="text-gray-500 hover:text-blue-600 transition-colors duration-200 p-2 rounded-full hover:bg-blue-50">
-                <Facebook className="w-5 h-5" />
+              <a
+                href="https://github.com/Yogesh1306"
+                target="_blank"
+                className="text-gray-500 hover:text-blue-600 transition-colors duration-200 p-2 rounded-full hover:bg-blue-50"
+              >
+                <GitHub className="w-5 h-5"/>
               </a>
-              <a href="#" className="text-gray-500 hover:text-gray-900 transition-colors duration-200 p-2 rounded-full hover:bg-gray-100">
+              <a
+                href="https://x.com/joshiyogesh24"
+                target="_blank"
+                className="text-gray-500 hover:text-gray-900 transition-colors duration-200 p-2 rounded-full hover:bg-gray-100"
+              >
                 <X className="w-5 h-5" />
               </a>
-              <a href="#" className="text-gray-500 hover:text-red-500 transition-colors duration-200 p-2 rounded-full hover:bg-red-50">
-                <Pinterest className="w-5 h-5" />
-              </a>
-              <a href="#" className="text-gray-500 hover:text-pink-500 transition-colors duration-200 p-2 rounded-full hover:bg-pink-50">
-                <Instagram className="w-5 h-5" />
+              
+              <a
+                href="https://www.linkedin.com/in/yogeshjoshi13"
+                target="_blank"
+                className="text-gray-500 hover:text-pink-500 transition-colors duration-200 p-2 rounded-full hover:bg-pink-50"
+              >
+                <LinkedIn className="w-5 h-5" />
               </a>
             </div>
           </div>
@@ -61,13 +80,13 @@ const Navbar = () => {
             <ul className="flex items-center space-x-6">
               {navItems.map((item) => (
                 <li key={item.to}>
-                  <NavLink 
+                  <NavLink
                     to={item.to}
                     className={({ isActive }) =>
                       `font-secondary text-lg font-medium transition-all duration-200 relative group ${
-                        isActive 
-                          ? 'text-blue-600' 
-                          : 'text-gray-700 hover:text-blue-600'
+                        isActive
+                          ? "text-blue-600"
+                          : "text-gray-700 hover:text-blue-600"
                       }`
                     }
                   >
@@ -84,13 +103,17 @@ const Navbar = () => {
             <button
               onClick={toggleTheme}
               className="p-2 rounded-full text-gray-500 hover:text-gray-700 hover:bg-gray-100 transition-all duration-200"
-              aria-label={`Switch to ${isDark ? 'light' : 'dark'} mode`}
+              aria-label={`Switch to ${isDark ? "light" : "dark"} mode`}
             >
-              {isDark ? <LightMode className="w-5 h-5" /> : <DarkMode className="w-5 h-5" />}
+              {isDark ? (
+                <LightMode className="w-5 h-5" />
+              ) : (
+                <DarkMode className="w-5 h-5" />
+              )}
             </button>
 
             {/* Search Icon */}
-            <button 
+            <button
               onClick={() => setIsSearchOpen(true)}
               className="p-2 rounded-full text-gray-500 hover:text-gray-700 hover:bg-gray-100 transition-all duration-200"
             >
@@ -100,24 +123,38 @@ const Navbar = () => {
             {/* User Controls */}
             {user ? (
               <div className="relative">
-                <button 
-                  onClick={() => setShowDrop(!showDrop)} 
+                <button
+                  onClick={() => setShowDrop(!showDrop)}
                   className="flex items-center space-x-2 p-2 rounded-full hover:bg-gray-100 transition-all duration-200"
                 >
-                  <img className="w-8 h-8 rounded-full object-cover border-2 border-gray-200" src={publicPath + user.data.profilePic} alt={user.data.username} />
-                  <span className="hidden sm:block font-medium text-gray-700">{user.data.username}</span>
+                  <img
+                    className="w-8 h-8 rounded-full object-cover border-2 border-gray-200"
+                    src={(publicPath + user?.userData.profileImg)}
+                    alt={user?.userData.username}
+                  />
+                  <span className="hidden sm:block font-medium text-gray-700">
+                    {user?.userData.username}
+                  </span>
                 </button>
 
                 {/* User Dropdown */}
-                <div className={`absolute right-0 mt-2 w-56 bg-white rounded-xl shadow-lg border border-gray-100 transition-all duration-200 transform ${
-                  showDrop ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 -translate-y-2 pointer-events-none'
-                }`}>
+                <div
+                  className={`absolute right-0 mt-2 w-56 bg-white rounded-xl shadow-lg border border-gray-100 transition-all duration-200 transform ${
+                    showDrop
+                      ? "opacity-100 scale-100 translate-y-0"
+                      : "opacity-0 scale-95 -translate-y-2 pointer-events-none"
+                  }`}
+                >
                   {/* User Info */}
                   <div className="p-4 border-b border-gray-100">
-                    <div className="font-secondary font-semibold text-gray-900">{user.data.username}</div>
-                    <div className="font-primary text-sm text-gray-500 truncate">{user.data.email}</div>
+                    <div className="font-secondary font-semibold text-gray-900">
+                      {user?.userData.username}
+                    </div>
+                    <div className="font-primary text-sm text-gray-500 truncate">
+                      {user?.userData.email}
+                    </div>
                   </div>
-                  
+
                   {/* Menu Items */}
                   <div className="py-2">
                     {navItems.map((item) => (
@@ -138,7 +175,7 @@ const Navbar = () => {
                       Settings
                     </NavLink>
                   </div>
-                  
+
                   {/* Logout */}
                   <div className="border-t border-gray-100 py-2">
                     <button
@@ -155,14 +192,14 @@ const Navbar = () => {
               </div>
             ) : (
               <div className="flex items-center space-x-3">
-                <NavLink 
-                  to="/login" 
+                <NavLink
+                  to="/login"
                   className="font-secondary font-medium text-gray-700 hover:text-blue-600 transition-colors duration-200"
                 >
                   Login
                 </NavLink>
-                <NavLink 
-                  to="/register" 
+                <NavLink
+                  to="/register"
                   className="btn-primary font-secondary px-4 py-2 text-sm"
                 >
                   Sign Up
@@ -175,21 +212,40 @@ const Navbar = () => {
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="md:hidden p-2 rounded-md text-gray-500 hover:text-gray-700 hover:bg-gray-100 transition-all duration-200"
             >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
                 {isMenuOpen ? (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
                 ) : (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4 6h16M4 12h16M4 18h16"
+                  />
                 )}
               </svg>
             </button>
           </div>
         </div>
-        
+
         {/* Mobile Menu */}
-        <div className={`md:hidden transition-all duration-300 ease-in-out ${
-          isMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0 overflow-hidden'
-        }`}>
+        <div
+          className={`md:hidden transition-all duration-300 ease-in-out ${
+            isMenuOpen
+              ? "max-h-96 opacity-100"
+              : "max-h-0 opacity-0 overflow-hidden"
+          }`}
+        >
           <div className="px-4 py-4 space-y-3 bg-gray-50 border-t border-gray-200">
             {navItems.map((item) => (
               <NavLink
@@ -197,9 +253,9 @@ const Navbar = () => {
                 to={item.to}
                 className={({ isActive }) =>
                   `block px-3 py-2 rounded-lg font-secondary font-medium transition-colors duration-200 ${
-                    isActive 
-                      ? 'text-blue-600 bg-blue-50' 
-                      : 'text-gray-700 hover:text-blue-600 hover:bg-white'
+                    isActive
+                      ? "text-blue-600 bg-blue-50"
+                      : "text-gray-700 hover:text-blue-600 hover:bg-white"
                   }`
                 }
                 onClick={() => setIsMenuOpen(false)}
@@ -207,19 +263,19 @@ const Navbar = () => {
                 {item.label}
               </NavLink>
             ))}
-            
+
             {/* Mobile Auth Buttons */}
             {!user && (
               <div className="pt-3 border-t border-gray-200 space-y-3">
-                <NavLink 
-                  to="/login" 
+                <NavLink
+                  to="/login"
                   className="block px-3 py-2 text-center font-secondary font-medium text-gray-700 hover:text-blue-600 transition-colors duration-200"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   Login
                 </NavLink>
-                <NavLink 
-                  to="/register" 
+                <NavLink
+                  to="/register"
                   className="block px-3 py-2 text-center btn-primary font-secondary"
                   onClick={() => setIsMenuOpen(false)}
                 >
@@ -230,9 +286,18 @@ const Navbar = () => {
           </div>
         </div>
       </div>
-      
+
       {/* Search Modal */}
-      <SearchModal isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
+      <div
+        className={` w-[40vw] min-h-[40vh] border bg-white rounded-2xl p-2 transition-all absolute top-16 right-0 ${isSearchOpen ? "" : "hidden"}`}
+        onMouseLeave={()=>setIsSearchOpen(false)}
+      >
+        <SearchModal
+          isOpen={isSearchOpen}
+          onClose={() => setIsSearchOpen(false)}
+        />
+      </div>
+      </div>
     </nav>
   );
 };
