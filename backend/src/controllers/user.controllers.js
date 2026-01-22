@@ -155,12 +155,12 @@ const changeProfilePic = asyncHandler(async (req, res) => {
   const user = await User.findByIdAndUpdate(
     req.user?._id,
     {
-      $set: { profilePic: profilePicLocalPath },
+      $set: { profileImg: profilePicLocalPath },
     },
     {
       new: true,
     },
-  ).select("-password");
+  ).select("-password -refreshToken");
 
   return res
     .status(200)
@@ -182,7 +182,7 @@ const changeUsername = asyncHandler(async (req, res) => {
     {
       new: true,
     },
-  ).select("-password");
+  ).select("-password -refreshToken");
 
   return res
     .status(200)
@@ -224,8 +224,8 @@ const googleLogin = asyncHandler(async (req, res) => {
     });
   }
 
-  if (existedUser.profilePic === "") {
-    existedUser.profilePic = profilePic;
+  if (existedUser.profileImg === "") {
+    existedUser.profileImg = profilePic;
     await existedUser.save({ validateBeforeSave: false });
   }
 
@@ -249,7 +249,7 @@ const googleLogin = asyncHandler(async (req, res) => {
     .json(
       new ApiResponse(
         200,
-        { userData: loggedInUser, accessToken, refreshToken },
+        loggedInUser,
         "User logged in successfully",
       ),
     );
