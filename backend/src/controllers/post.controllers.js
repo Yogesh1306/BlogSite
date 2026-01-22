@@ -163,4 +163,23 @@ const getAPost = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, post, "Post retrieved successfully"));
 });
 
-export { createPost, updatePost, deletePost, getAPost, getAllPosts };
+const searchByTitle = asyncHandler(async (req, res) => {
+  const { title, page = 1, limit = 10 } = req.query;
+  if (!title) {
+    throw new ApiError(400, "Title query parameter is required");
+  }
+  const skip = (page - 1) * limit;
+
+  const results = await Post.find({
+    title: { $regex: title, $options: "i" },
+  })
+    .sort({ favoritesCount: -1 })
+    .skip(Number(skip))
+    .limit(Number.parseInt(limit));
+
+  return res
+    .status(200)
+    .json(new ApiResponse(200, results, "Retrieved successfully!!"));
+});
+
+export { createPost, updatePost, deletePost, getAPost, getAllPosts, searchByTitle };
