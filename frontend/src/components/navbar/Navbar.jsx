@@ -13,7 +13,7 @@ import { useTheme } from "../../context/ThemeContext";
 import SearchModal from "../ui/SearchModal";
 
 const Navbar = () => {
-  const publicPath = "http://localhost:3000/";
+  const publicPath = import.meta.env.VITE_API_BASE_URL;
   const [showDrop, setShowDrop] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);

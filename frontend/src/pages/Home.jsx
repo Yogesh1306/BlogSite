@@ -2,7 +2,7 @@ import Header from "../components/header/Header"
 import Posts from "../components/posts/Posts"
 import Sidebar from "../components/sidebar/Sidebar"
 import { useEffect, useState } from "react"
-import axios from 'axios'
+import api from "../api/api"
 import { useLocation } from "react-router"
 
 
@@ -13,7 +13,7 @@ const Home = () => {
     useEffect(() => {
         const fetchPosts = async () => {
             try {
-                const res = await axios.get("/api/v1/posts" + search)
+                const res = await api.get("/api/v1/posts" + search)
                 setPosts(res.data.data[0])
             } catch (error) {
                 if(error.response && error.response.status === 404){

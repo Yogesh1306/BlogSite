@@ -1,6 +1,6 @@
 import { Add } from '@mui/icons-material';
 import { useState } from 'react';
-import axios from 'axios';
+import api from '../api/api';
 
 const Write = () => {
   const [title, setTitle] = useState("");
@@ -16,7 +16,7 @@ const Write = () => {
       data.append("category", ["travel", "life"]);
       data.append("photo", photo);
       console.log("data", data)
-      const res = await axios.post("/api/v1/posts/", data, { headers: { "Content-Type": "multipart/form-data" }, withCredentials: true });
+      const res = await api.post("/api/v1/posts/", data, { headers: { "Content-Type": "multipart/form-data" }, withCredentials: true });
       console.log(res.data);
       window.location.replace("/post/" + res.data.data._id);
     } catch (error) {

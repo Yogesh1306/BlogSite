@@ -1,12 +1,11 @@
 import { useContext, useEffect, useState } from "react";
-import Sidebar from "../components/sidebar/Sidebar";
-import { Person, PhotoCamera, Visibility, VisibilityOff } from '@mui/icons-material';
+import { PhotoCamera, Visibility, VisibilityOff } from '@mui/icons-material';
 import { Context } from "../context/Context";
-import axios from "axios";
+import api from "../api/api";
 
 
 const Settings = () => {
-  const publicPath = "http://localhost:3000/";
+  const publicPath = import.meta.env.VITE_API_BASE_URL;
   const [profileImage, setProfileImage] = useState("");
   const [imagePreview, setImagePreview] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
@@ -21,7 +20,6 @@ const Settings = () => {
     setProfileImage(user?.profileImg || "");
     setUsername(user?.username || " ");
     setEmail(user?.email || " ")
-    console.log("user in settings", user)
   }, [user,dispatch])
 
 
@@ -51,16 +49,15 @@ const Settings = () => {
       if (imagePreview) {
         const data = new FormData();
         data.append("profilePic", imagePreview);
-        const res = await axios.patch("/api/v1/users/updateProfilePic", data, { withCredentials: true });
-        console.log(res.data.data)
+        const res = await api.patch("/api/v1/users/updateProfilePic", data, { withCredentials: true });
         dispatch({type: "UPDATE_SUCCESS", payload: res.data.data})
       }
       if (username !== user.username) {
-        const res = await axios.patch("/api/v1/users/updateUsername", { username }, { withCredentials: true });
+        const res = await api.patch("/api/v1/users/updateUsername", { username }, { withCredentials: true });
         dispatch({type: "UPDATE_SUCCESS", payload: res.data.data})
       }
       if(oldPassword !== "" && newPassword !== ""){
-        const res = await axios.patch("/api/v1/users/updatePassword", {oldPassword, newPassword}, {withCredentials: true});
+        const res = await api.patch("/api/v1/users/updatePassword", {oldPassword, newPassword}, {withCredentials: true});
         dispatch({type: "UPDATE_SUCCESS", payload: res.data.data})
       }
     } catch (error) {

@@ -1,8 +1,8 @@
 import { Edit, Delete } from "@mui/icons-material";
 import { NavLink } from "react-router";
 import { Context } from "../../context/Context";
-import axios from "axios";
 import { useState, useEffect, useContext  } from "react";
+import api from "../../api/api";
 
 const IndividualPost = ({ post }) => {
   const publicPath = "http://localhost:3000/";
@@ -17,12 +17,12 @@ const IndividualPost = ({ post }) => {
   }, [post])
 
   const handleDelete = async () => {
-    await axios.delete(`/api/v1/posts/${post._id}`, { credentials: true });
+    await api.delete(`/api/v1/posts/${post._id}`, { credentials: true });
     window.location.replace("/");
   };
   const handleUpdate = async () => {
     try {
-      await axios.put(`/api/v1/posts/${post._id}`, { credentials: true, title, content })
+      await api.put(`/api/v1/posts/${post._id}`, { credentials: true, title, content })
       setUpdateMode(false);
     } catch (error) {
       console.log("Error while updating the post:", error);

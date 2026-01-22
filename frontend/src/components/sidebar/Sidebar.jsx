@@ -1,7 +1,7 @@
 import { Facebook, X, Pinterest, Instagram, TrendingUp, NewReleases, Email, Person } from "@mui/icons-material"
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { NavLink, useLocation } from "react-router";
+import api from "../../api/api";
 
 const Sidebar = ({posts}) => {
     const [categories, setCategories] = useState([]);
@@ -14,7 +14,7 @@ const Sidebar = ({posts}) => {
     useEffect(() => {
         const getCategories = async() => {
             try {
-                const res = await axios.get("/api/v1/categories");
+                const res = await api.get("/api/v1/categories");
                 setCategories(res.data.data);
             } catch (error) {
                 console.error('Error fetching categories:', error);

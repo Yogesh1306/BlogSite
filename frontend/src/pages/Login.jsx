@@ -1,10 +1,10 @@
 import { NavLink, useNavigate } from "react-router";
 import { useContext, useRef, useState } from "react";
-import axios from "axios";
 import { Context } from "../context/Context";
 import { auth, provider } from "../firebase";
 import { signInWithPopup } from "firebase/auth";
 import { Close, Visibility, VisibilityOff } from "@mui/icons-material";
+import api from "../api/api";
 
 const Login = () => {
   const userRef = useRef();
@@ -18,7 +18,7 @@ const Login = () => {
     dispatch({ type: "LOGIN_START" });
     //lOGIN LOGIC
     try {
-      const res = await axios.post("/api/v1/users/Login", {
+      const res = await api.post("/api/v1/users/Login", {
         username: userRef.current.value,
         password: passwordRef.current.value,
       });
@@ -38,7 +38,7 @@ const Login = () => {
           profilePic: result.user.photoURL,
         };
         dispatch({ type: "LOGIN_START" });
-        const res = await axios.post("/api/v1/users/google", userDetails)
+        const res = await api.post("/api/v1/users/google", userDetails)
         dispatch({ type: "LOGIN_SUCCESS", payload: res.data.data });
         navigate("/");
       })

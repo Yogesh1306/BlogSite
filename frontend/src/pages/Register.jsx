@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { NavLink } from 'react-router';
-import axios from 'axios';
+import api from '../api/api';
 
 const Register = () => {
     const [username, setUsername] = useState("")
@@ -12,16 +12,12 @@ const Register = () => {
         e.preventDefault();
         setError(false);
         try {
-            const res = await axios.post("/api/v1/users/register", {username, email, password});
+            const res = await api.post("/api/v1/users/register", {username, email, password});
             res.data && window.location.replace("/login")
         } catch (error) {
             console.log(error);
             setError(true);
         }
-        // setUsername("");
-        // setEmail("");
-        // setPassword("");
-        // e.target.reset();
     }
   return (
     <div className="flex justify-center items-center relative ">

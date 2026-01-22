@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useToast } from '../../context/ToastContext';
 
 const Post = ({post}) => {
-  const publicPath = "http://localhost:3000/"
+  const publicPath = import.meta.env.VITE_API_BASE_URL;
   const [isLiked, setIsLiked] = useState(false);
   const [isBookmarked, setIsBookmarked] = useState(false);
   const { showSuccess, showInfo } = useToast();
