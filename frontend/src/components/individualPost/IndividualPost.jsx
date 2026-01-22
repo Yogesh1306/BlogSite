@@ -48,7 +48,7 @@ const IndividualPost = ({ post }) => {
       ) : (
         <h1 className="flex justify-between items-center text-4xl ml-[400px]">
           {title}
-          {post.author.username === user?.data.username && (
+          {post.author.username === user?.userData.username && (
             <div className="flex justify-center items-center gap-1">
               <button onClick={() => setUpdateMode(true)}>
                 <Edit className="text-green-500 cursor-pointer" />
