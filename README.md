@@ -9,7 +9,7 @@ Users can read, write, edit, and delete blog posts.
 
 ```
 BlogSite/
-├── frontend/         # React / UI / client-side code (or whatever framework you used)
+├── frontend/         # React / UI / client-side code
 ├── backend/          # Server / API / database layer
 ├── .gitignore
 └── README.md         # This file
@@ -23,7 +23,7 @@ BlogSite/
 - CRUD operations for blog posts  
 - Responsive UI for reading and writing posts  
 - REST API in backend  
-- Possibly more: search, comments, user profile.
+- Possibly more: search, likes, user profile.
 
 ---
 
@@ -31,8 +31,8 @@ BlogSite/
 
 | Layer       | Technology / Tools                  |
 |--------------|--------------------------------------|
-| Frontend     | JavaScript, CSS, HTML, [React] |
-| Backend      | Node.js , Express, MongoDB |
+| Frontend     | JavaScript, CSS, HTML, [React], React Router |
+| Backend      | Node.js , Express, MongoDB, multer |
 | Others       | Any libraries, tools, hosting, environment setup |
 
 ---
