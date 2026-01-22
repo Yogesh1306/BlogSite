@@ -129,11 +129,11 @@ const Navbar = () => {
                 >
                   <img
                     className="w-8 h-8 rounded-full object-cover border-2 border-gray-200"
-                    src={(publicPath + user?.userData.profileImg)}
-                    alt={user?.userData.username}
+                    src={(publicPath + user?.profileImg)}
+                    alt={user?.username}
                   />
                   <span className="hidden sm:block font-medium text-gray-700">
-                    {user?.userData.username}
+                    {user?.username}
                   </span>
                 </button>
 
@@ -148,10 +148,10 @@ const Navbar = () => {
                   {/* User Info */}
                   <div className="p-4 border-b border-gray-100">
                     <div className="font-secondary font-semibold text-gray-900">
-                      {user?.userData.username}
+                      {user?.username}
                     </div>
                     <div className="font-primary text-sm text-gray-500 truncate">
-                      {user?.userData.email}
+                      {user?.email}
                     </div>
                   </div>
 
