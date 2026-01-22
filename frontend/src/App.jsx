@@ -41,11 +41,11 @@ function App() {
     },
     {
       path: "/login",
-      element: <>{user ? <><Navbar/><Home/></> : <><Navbar/><Login/></> }</>
+      element: <>{user ? <><Navbar/><Home/></> : <><Login/></> }</>
     },
     {
       path: "/register",
-      element: <>{user ? <><Navbar/><Home/></> : <><Navbar/><Register/></> }</>
+      element: <>{user ? <><Navbar/><Home/></> : <><Register/></> }</>
     },
     {
       path: "/posts/:postId",
